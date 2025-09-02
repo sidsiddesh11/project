@@ -4,32 +4,36 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelUtilities {
-	public static Object[][] getdata(String excelpath, String sheetname) throws IOException {
-		  
-		  String[][] data=new String[3][2];
-		  
-		  String projectpath=System.getProperty("user.dir")  ;
-		//  File file1=new File(projectpath+"\\src\\test\\resources\\Orangehrm_Testdata\\data.xlsx");
-		  File file1=new File(excelpath);
-		  FileInputStream fs=new FileInputStream(file1);
-		  XSSFWorkbook workbook=new XSSFWorkbook(fs);
-		  XSSFSheet worksheet=workbook.getSheet(sheetname);
-		  int rowcount=worksheet.getPhysicalNumberOfRows();
-		  System.out.println("rows:"+rowcount);
-		  
-		  for(int i=0;i<rowcount;i++)
-		  {
-			  data[i][0]=worksheet.getRow(i).getCell(0).getStringCellValue();
-		
-			  data[i][1]=worksheet.getRow(i).getCell(1).getStringCellValue();
-		  }
-		  
-		  return data;
-		  
-		 	    };
 
+    /**
+     * Reads a sheet into Object[][].
+     * - Skips the first row (assumed header)
+     * - Uses DataFormatter so numbers/dates become strings safely
+     */
+    public static Object[][] getData(String excelPath, String sheetName) throws IOException {
+        FileInputStream fis = new FileInputStream(new File(excelPath));
+        try (XSSFWorkbook wb = new XSSFWorkbook(fis)) {
+            XSSFSheet sh = wb.getSheet(sheetName);
+            int totalRows = sh.getPhysicalNumberOfRows();  // includes header
+            int totalCols = sh.getRow(0).getLastCellNum(); // header defines column count
+
+            // Skip header (row 0)
+            int dataRows = Math.max(0, totalRows - 1);
+            Object[][] data = new Object[dataRows][totalCols];
+
+            DataFormatter fmt = new DataFormatter();
+            for (int r = 1; r < totalRows; r++) {
+                for (int c = 0; c < totalCols; c++) {
+                    String value = fmt.formatCellValue(sh.getRow(r).getCell(c));
+                    data[r - 1][c] = value;
+                }
+            }
+            return data;
+        }
+    }
 }
