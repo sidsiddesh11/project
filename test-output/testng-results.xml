@@ -1,117 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="8" passed="8" failed="0" skipped="0">
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-09-02T11:32:31 IST" name="Default suite" finished-at="2025-09-02T11:33:28 IST" duration-ms="56996">
+  <suite started-at="2025-09-02T14:40:03 IST" name="Default suite" finished-at="2025-09-02T14:40:23 IST" duration-ms="19668">
     <groups>
     </groups>
-    <test started-at="2025-09-02T11:32:31 IST" name="Default test" finished-at="2025-09-02T11:33:28 IST" duration-ms="56996">
-      <class name="com.project.tests.HomePageTest">
-        <test-method is-config="true" signature="setupreport()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:32:30 IST" name="setupreport" finished-at="2025-09-02T11:32:31 IST" duration-ms="535" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setupreport -->
-        <test-method is-config="true" signature="setup()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:32:31 IST" name="setup" finished-at="2025-09-02T11:32:39 IST" duration-ms="7716" status="PASS">
+    <test started-at="2025-09-02T14:40:03 IST" name="Default test" finished-at="2025-09-02T14:40:23 IST" duration-ms="19668">
+      <class name="com.project.tests.ApiPageTest">
+        <test-method is-config="true" signature="setup()[pri:0, instance:com.project.tests.ApiPageTest@6c40365c]" started-at="2025-09-02T14:40:03 IST" name="setup" finished-at="2025-09-02T14:40:08 IST" duration-ms="4417" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="verifyLogoDisplayed()[pri:1, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:32:39 IST" name="verifyLogoDisplayed" finished-at="2025-09-02T11:32:39 IST" duration-ms="141" status="PASS">
+        <test-method signature="testClickAllApis()[pri:0, instance:com.project.tests.ApiPageTest@6c40365c]" started-at="2025-09-02T14:40:08 IST" name="testClickAllApis" finished-at="2025-09-02T14:40:23 IST" duration-ms="15117" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- verifyLogoDisplayed -->
-        <test-method is-config="true" signature="teardown()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:32:39 IST" name="teardown" finished-at="2025-09-02T11:32:39 IST" duration-ms="429" status="PASS">
+        </test-method> <!-- testClickAllApis -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.project.tests.ApiPageTest@6c40365c]" started-at="2025-09-02T14:40:23 IST" name="tearDown" finished-at="2025-09-02T14:40:23 IST" duration-ms="114" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- teardown -->
-        <test-method is-config="true" signature="setup()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:32:39 IST" name="setup" finished-at="2025-09-02T11:32:43 IST" duration-ms="3946" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setup -->
-        <test-method signature="verifyHomePageTitle()[pri:2, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:32:43 IST" name="verifyHomePageTitle" finished-at="2025-09-02T11:32:43 IST" duration-ms="56" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- verifyHomePageTitle -->
-        <test-method is-config="true" signature="teardown()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:32:43 IST" name="teardown" finished-at="2025-09-02T11:32:44 IST" duration-ms="538" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- teardown -->
-        <test-method is-config="true" signature="setup()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:32:44 IST" name="setup" finished-at="2025-09-02T11:32:48 IST" duration-ms="4370" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setup -->
-        <test-method signature="verifyNavigationToProducts()[pri:3, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:32:48 IST" name="verifyNavigationToProducts" finished-at="2025-09-02T11:32:52 IST" duration-ms="4121" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- verifyNavigationToProducts -->
-        <test-method is-config="true" signature="teardown()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:32:52 IST" name="teardown" finished-at="2025-09-02T11:32:53 IST" duration-ms="535" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- teardown -->
-        <test-method is-config="true" signature="setup()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:32:53 IST" name="setup" finished-at="2025-09-02T11:32:58 IST" duration-ms="4859" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setup -->
-        <test-method signature="verifyNavigationToSignupLogin()[pri:4, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:32:58 IST" name="verifyNavigationToSignupLogin" finished-at="2025-09-02T11:32:59 IST" duration-ms="1511" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- verifyNavigationToSignupLogin -->
-        <test-method is-config="true" signature="teardown()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:32:59 IST" name="teardown" finished-at="2025-09-02T11:33:00 IST" duration-ms="480" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- teardown -->
-        <test-method is-config="true" signature="setup()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:33:00 IST" name="setup" finished-at="2025-09-02T11:33:04 IST" duration-ms="4929" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setup -->
-        <test-method signature="verifyNavigationToTestCases()[pri:5, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:33:04 IST" name="verifyNavigationToTestCases" finished-at="2025-09-02T11:33:06 IST" duration-ms="1606" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- verifyNavigationToTestCases -->
-        <test-method is-config="true" signature="teardown()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:33:06 IST" name="teardown" finished-at="2025-09-02T11:33:07 IST" duration-ms="515" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- teardown -->
-        <test-method is-config="true" signature="setup()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:33:07 IST" name="setup" finished-at="2025-09-02T11:33:11 IST" duration-ms="4822" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setup -->
-        <test-method signature="verifyNavigationToApiTesting()[pri:6, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:33:11 IST" name="verifyNavigationToApiTesting" finished-at="2025-09-02T11:33:13 IST" duration-ms="1613" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- verifyNavigationToApiTesting -->
-        <test-method is-config="true" signature="teardown()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:33:13 IST" name="teardown" finished-at="2025-09-02T11:33:14 IST" duration-ms="500" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- teardown -->
-        <test-method is-config="true" signature="setup()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:33:14 IST" name="setup" finished-at="2025-09-02T11:33:18 IST" duration-ms="4853" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setup -->
-        <test-method signature="verifyNavigationToContactUs()[pri:7, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:33:18 IST" name="verifyNavigationToContactUs" finished-at="2025-09-02T11:33:21 IST" duration-ms="2544" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- verifyNavigationToContactUs -->
-        <test-method is-config="true" signature="teardown()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:33:21 IST" name="teardown" finished-at="2025-09-02T11:33:21 IST" duration-ms="517" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- teardown -->
-        <test-method is-config="true" signature="setup()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:33:21 IST" name="setup" finished-at="2025-09-02T11:33:26 IST" duration-ms="4319" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setup -->
-        <test-method signature="verifyNavigationToCart()[pri:8, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:33:26 IST" name="verifyNavigationToCart" finished-at="2025-09-02T11:33:27 IST" duration-ms="1469" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- verifyNavigationToCart -->
-        <test-method is-config="true" signature="teardown()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:33:27 IST" name="teardown" finished-at="2025-09-02T11:33:28 IST" duration-ms="519" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- teardown -->
-        <test-method is-config="true" signature="flushreport()[pri:0, instance:com.project.tests.HomePageTest@fa4c865]" started-at="2025-09-02T11:33:28 IST" name="flushreport" finished-at="2025-09-02T11:33:28 IST" duration-ms="600" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- flushreport -->
-      </class> <!-- com.project.tests.HomePageTest -->
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.project.tests.ApiPageTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
