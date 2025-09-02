@@ -31,7 +31,7 @@ public class Basetest {
 		  System.out.println("Before method");
 		  WebDriverManager.chromedriver().setup();
 			driver=new ChromeDriver();
-			driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+			driver.get("https://automationexercise.com/");
 			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 	  }
 	  @AfterMethod
