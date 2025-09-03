@@ -19,8 +19,8 @@ public class ExcelUtilities {
         FileInputStream fis = new FileInputStream(new File(excelPath));
         try (XSSFWorkbook wb = new XSSFWorkbook(fis)) {
             XSSFSheet sh = wb.getSheet(sheetName);
-            int totalRows = sh.getPhysicalNumberOfRows();  // includes header
-            int totalCols = sh.getRow(0).getLastCellNum(); // header defines column count
+            int totalRows = sh.getPhysicalNumberOfRows();  
+            int totalCols = sh.getRow(0).getLastCellNum(); 
 
             // Skip header (row 0)
             int dataRows = Math.max(0, totalRows - 1);
