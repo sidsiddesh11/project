@@ -1,34 +1,34 @@
-package com.project.tests;
+package com.project.tests; 
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.project.pages.API_page;
+import com.aventstack.extentreports.Status;
+import com.project.base.Basetest;
 
-public class ApiPageTest {
+public class ApiPageTest extends Basetest {
 
-    WebDriver driver;
     API_page apiPage;
 
-    @BeforeClass
-    public void setup() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+    @BeforeMethod
+    public void setupApiPage() {
         driver.get("https://www.automationexercise.com/api_list");
 
         apiPage = new API_page(driver);
         apiPage.initApiLocators();
+
+        test = extent.createTest("API Page Test - Click All APIs");
     }
 
     @Test
     public void testClickAllApis() {
         apiPage.clickAllApis();
+        test.log(Status.PASS, "All API links clicked successfully");
     }
 
     @AfterClass
-    public void tearDown() {
+    public void tearDownApiPage() {
         if (driver != null) {
             driver.quit();
         }

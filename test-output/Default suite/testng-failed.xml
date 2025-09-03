@@ -3,15 +3,16 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.project.tests.ContactUsPageTest">
+      <class name="com.project.tests.TestCasesPageTest">
         <methods>
           <include name="teardown"/>
+          <include name="setupPage"/>
+          <include name="setupReport"/>
           <include name="setup"/>
-          <include name="flushreport"/>
-          <include name="setupreport"/>
-          <include name="submitContactUsForm" invocation-numbers="5"/>
+          <include name="flushReport"/>
+          <include name="testClickAllTestCases"/>
         </methods>
-      </class> <!-- com.project.tests.ContactUsPageTest -->
+      </class> <!-- com.project.tests.TestCasesPageTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

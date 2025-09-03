@@ -12,7 +12,7 @@ public class ExtentManager {
 	{
 if(extent==null)
 {
-		String reportpath=projectpath+"\\src\\test\\resources\\Reports\\ReportsAugreport.html";
+		String reportpath=projectpath+"\\src\\test\\resources\\Reports\\ReportsProject.html";
 		ExtentSparkReporter spark=new ExtentSparkReporter(reportpath);
 		 extent = new ExtentReports(); 
 		extent.attachReporter(spark);

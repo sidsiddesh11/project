@@ -1,37 +1,43 @@
 package com.project.tests;
 
+import com.project.base.Basetest;
 import com.project.pages.TestCasesPage;
+import com.project.utilities.ScreenshotUtilities;   // ✅ added
+import com.aventstack.extentreports.Status;        // ✅ added
+
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
 
-public class TestCasesPageTest {
+public class TestCasesPageTest extends Basetest {
 
-    private WebDriver driver;
     private TestCasesPage testCasesPage;
 
-    @BeforeClass
-    public void setup() {
-        // If you rely on chromedriver on PATH, this is enough.
-        // Otherwise set System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-
+    @BeforeMethod
+    public void setupPage() {
         driver.get("https://www.automationexercise.com/test_cases");
 
         testCasesPage = new TestCasesPage(driver);
         testCasesPage.initTestCaseLocators();
+
+        test = extent.createTest("TC_ECOM_TestCases - Verify Clicking All Test Cases");
     }
 
     @Test
-    public void testClickAllTestCases() {
-        testCasesPage.clickAllTestCases();
-    }
-
-    @AfterClass(alwaysRun = true)
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
+    public void testClickAllTestCases() throws IOException {
+        try {
+            testCasesPage.clickAllTestCases();
+            test.log(Status.PASS, "Clicked all test cases successfully")
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "TestCasesPage"));
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to click all test cases: " + e.getMessage())
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "TestCasesPageFail"));
+            throw e;
         }
     }
+
+
+
 }
