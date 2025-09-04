@@ -15,7 +15,6 @@ import java.lang.reflect.Method;
 
 public class ContactUsPageTest extends Basetest {
 
-    // Create a report node for every @Test here (needed because Basetest doesn't auto-create it)
     @BeforeMethod(alwaysRun = true)
     public void createExtentNode(Method m) {
     	test = extent.createTest("TC_ECOM_ContactUs:  " +m.getName());
@@ -178,7 +177,7 @@ public class ContactUsPageTest extends Basetest {
     @Test
     public void verifyMessageAfterSubmit() {
         Contactuspage c = openContactPage();
-        c.enterName("Subhash");
+        c.enterName("TeamA7");
         c.enterEmail("test@example.com");
         c.enterSubject("Test");
         c.enterMessage("Message");
@@ -189,7 +188,7 @@ public class ContactUsPageTest extends Basetest {
     @Test
     public void verifyHomeButtonAfterSubmit() {
         Contactuspage c = openContactPage();
-        c.enterName("Subhash");
+        c.enterName("TeamA7");
         c.enterEmail("test@example.com");
         c.enterSubject("Test");
         c.enterMessage("Message");
