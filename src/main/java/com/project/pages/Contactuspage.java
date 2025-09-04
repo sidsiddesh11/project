@@ -16,16 +16,16 @@ public class Contactuspage {
     }
 
     // Locators 
-    private By headingGetInTouch      = By.xpath("//h2[normalize-space()='Get In Touch' or normalize-space()='GET IN TOUCH']");
-    private By labelFeedbackForUs     = By.xpath("//*[contains(normalize-space(),'Feedback For Us') or contains(normalize-space(),'Feedback for us')]");
-    private By nameField              = By.cssSelector("input[name='name']");
-    private By emailField             = By.cssSelector("input[name='email']");
-    private By subjectField           = By.cssSelector("input[name='subject']");
-    private By messageField           = By.cssSelector("textarea#message");
-    private By uploadFile             = By.cssSelector("input[name='upload_file']");
-    private By submitButton           = By.cssSelector("input[name='submit']");
-    private By successMsg             = By.cssSelector("div.status.alert.alert-success");
-    private By homeButtonAfterSubmit  = By.xpath("//a[normalize-space()='Home']");
+    private By headingGetInTouch= By.xpath("//h2[normalize-space()='Get In Touch' or normalize-space()='GET IN TOUCH']");
+    private By labelFeedbackForUs= By.xpath("//*[contains(normalize-space(),'Feedback For Us') or contains(normalize-space(),'Feedback for us')]");
+    private By nameField= By.cssSelector("input[name='name']");
+    private By emailField= By.cssSelector("input[name='email']");
+    private By subjectField= By.cssSelector("input[name='subject']");
+    private By messageField= By.cssSelector("textarea#message");
+    private By uploadFile= By.cssSelector("input[name='upload_file']");
+    private By submitButton= By.cssSelector("input[name='submit']");
+    private By successMsg= By.cssSelector("div.status.alert.alert-success");
+    private By homeButtonAfterSubmit= By.xpath("//a[normalize-space()='Home']");
 
 
     public boolean isGetInTouchVisible() {
