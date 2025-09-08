@@ -26,25 +26,30 @@ public class Contactuspage {
     private By submitButton= By.cssSelector("input[name='submit']");
     private By successMsg= By.cssSelector("div.status.alert.alert-success");
     private By homeButtonAfterSubmit= By.xpath("//a[normalize-space()='Home']");
-
-
+    
     public boolean isGetInTouchVisible() {
         try { return wait.until(ExpectedConditions.visibilityOfElementLocated(headingGetInTouch)).isDisplayed(); }
         catch (TimeoutException e) { return false; }
     }
-
     public boolean isFeedbackForUsVisible() {
         try { return wait.until(ExpectedConditions.visibilityOfElementLocated(labelFeedbackForUs)).isDisplayed(); }
         catch (TimeoutException e) { return false; }
     }
-
-    public void enterName(String v)    { WebElement e = driver.findElement(nameField);    e.clear(); e.sendKeys(v); }
-    public void enterEmail(String v)   { WebElement e = driver.findElement(emailField);   e.clear(); e.sendKeys(v); }
-    public void enterSubject(String v) { WebElement e = driver.findElement(subjectField); e.clear(); e.sendKeys(v); }
-    public void enterMessage(String v) { WebElement e = driver.findElement(messageField); e.clear(); e.sendKeys(v); }
-    public void uploadFile(String path){ driver.findElement(uploadFile).sendKeys(path); }
-
-
+    public void enterName(String v)    { 
+    	WebElement e = driver.findElement(nameField);e.clear(); e.sendKeys(v); 
+    	}
+    public void enterEmail(String v)   { 
+    	WebElement e = driver.findElement(emailField);e.clear(); e.sendKeys(v);
+    	}
+    public void enterSubject(String v) { 
+    	WebElement e = driver.findElement(subjectField); e.clear(); e.sendKeys(v);
+    	}
+    public void enterMessage(String v) { 
+    	WebElement e = driver.findElement(messageField); e.clear(); e.sendKeys(v); 
+    	}
+    public void uploadFile(String path){ 
+    	driver.findElement(uploadFile).sendKeys(path); 
+    	}
     public boolean clickSubmitAndAcceptIfAlert(int waitSecondsForAlert) {
         driver.findElement(submitButton).click();
         try {
@@ -55,27 +60,29 @@ public class Contactuspage {
             return false;
         }
     }
-
     public boolean isSuccessMessageDisplayed() {
         try { return wait.until(ExpectedConditions.visibilityOfElementLocated(successMsg)).isDisplayed(); }
         catch (TimeoutException e) { return false; }
     }
-
     public void clickHomeButton() {
         wait.until(ExpectedConditions.elementToBeClickable(homeButtonAfterSubmit)).click();
     }
-
-  
     private boolean isRequired(By locator) {
         String val = driver.findElement(locator).getAttribute("required");
         return val != null && val.equalsIgnoreCase("true");
     }
-    public boolean isNameRequired()    { return isRequired(nameField); }
-    public boolean isEmailRequired()   { return isRequired(emailField); }
-    public boolean isSubjectRequired() { return isRequired(subjectField); }
-    public boolean isMessageRequired() { return isRequired(messageField); }
-
-
+    public boolean isNameRequired(){ 
+    	return isRequired(nameField); 
+    	}
+    public boolean isEmailRequired(){ 
+    	return isRequired(emailField); 
+    	}
+    public boolean isSubjectRequired(){ 
+    	return isRequired(subjectField); 
+    	}
+    public boolean isMessageRequired(){ 
+    	return isRequired(messageField); 
+    	}
     public boolean isFileChosen() {
         String v = driver.findElement(uploadFile).getAttribute("value");
         return v != null && !v.trim().isEmpty();
