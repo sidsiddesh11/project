@@ -17,7 +17,7 @@ public class ContactUsPageTest extends Basetest {
 
     @BeforeMethod(alwaysRun = true)
     public void createExtentNode(Method m) {
-    	test = extent.createTest("TC_ECOM_ContactUs:  " +m.getName());
+    	test = extent.createTest("TC_ECOM_ContactUs :  " +m.getName());
     }
 
  
@@ -152,9 +152,7 @@ public class ContactUsPageTest extends Basetest {
         c.enterMessage(message);
 
         if (filePath != null && !filePath.trim().isEmpty()) {
-            String abs = new File(filePath).isAbsolute()
-                    ? filePath
-                    : System.getProperty("user.dir") + File.separator + filePath.replace("/", File.separator);
+            String abs = new File(filePath).isAbsolute()? filePath: System.getProperty("user.dir") + File.separator + filePath.replace("/", File.separator);
             c.uploadFile(abs);
         }
 
@@ -163,40 +161,39 @@ public class ContactUsPageTest extends Basetest {
         Assert.assertTrue(c.isSuccessMessageDisplayed(), "Success message should be visible");
     }
 
-    @Test
-    public void verifyPopupOk() {
+    @Test(dataProvider = "contactus-excel")
+    public void verifyPopupOk(String name, String email, String subject, String message, String filePath) {
         Contactuspage c = openContactPage();
-        c.enterName("Subhash");
-        c.enterEmail("test@example.com");
-        c.enterSubject("Test");
-        c.enterMessage("Message");
+        c.enterName(name);
+        c.enterEmail(email);
+        c.enterSubject(subject);
+        c.enterMessage(message);
         boolean alertShown = c.clickSubmitAndAcceptIfAlert(4);
         Assert.assertTrue(alertShown, "Alert should be shown and accepted");
     }
 
-    @Test
-    public void verifyMessageAfterSubmit() {
+    @Test(dataProvider = "contactus-excel")
+    public void verifyMessageAfterSubmit(String name, String email, String subject, String message, String filePath) {
         Contactuspage c = openContactPage();
-        c.enterName("TeamA7");
-        c.enterEmail("test@example.com");
-        c.enterSubject("Test");
-        c.enterMessage("Message");
+        c.enterName(name);
+        c.enterEmail(email);
+        c.enterSubject(subject);
+        c.enterMessage(message);
         c.clickSubmitAndAcceptIfAlert(4);
         Assert.assertTrue(c.isSuccessMessageDisplayed(), "Success message visible");
     }
 
-    @Test
-    public void verifyHomeButtonAfterSubmit() {
+    @Test(dataProvider = "contactus-excel")
+    public void verifyHomeButtonAfterSubmit(String name, String email, String subject, String message, String filePath) {
         Contactuspage c = openContactPage();
-        c.enterName("TeamA7");
-        c.enterEmail("test@example.com");
-        c.enterSubject("Test");
-        c.enterMessage("Message");
+        c.enterName(name);
+        c.enterEmail(email);
+        c.enterSubject(subject);
+        c.enterMessage(message);
         c.clickSubmitAndAcceptIfAlert(4);
         c.clickHomeButton();
         Assert.assertTrue(driver.getCurrentUrl().contains("automationexercise.com"));
     }
-
     @Test public void verifyMandatoryName(){ 
     	Assert.assertTrue(openContactPage().isNameRequired(),"Name required"); 
     	}
