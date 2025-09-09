@@ -7,21 +7,20 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.project.base.Basetest;
-import com.project.pages.Homepage;
 import com.project.pages.productpage;
-import com.project.utilities.ScreenshotUtilities;   // ✅ added
-import com.aventstack.extentreports.Status;        // ✅ added
+import com.project.utilities.ScreenshotUtilities;
+import com.aventstack.extentreports.Status;
 
 public class productpageTest extends Basetest {
     private productpage productPage;
-    private Homepage homepage;
 
     @BeforeMethod
     public void setUpPage() {
-        homepage = new Homepage(driver);
-        homepage.clickProducts();
+        driver.get("https://automationexercise.com/products");   // ✅ Directly open Products page
         productPage = new productpage(driver);
     }
+
+    // ----------------- Existing Test Cases -----------------
 
     @Test
     public void verifyProductsDisplayed() throws IOException {
@@ -161,6 +160,106 @@ public class productpageTest extends Basetest {
         } catch (AssertionError e) {
             test.log(Status.FAIL, "Kids category failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "KidsCategoryFail"));
+            throw e;
+        }
+    }
+
+    // ----------------- New Brand Test Cases -----------------
+
+    @Test
+    public void verifyPoloBrand() throws IOException {
+        test = extent.createTest("TC_ECOM_Products_11 - Verify Polo Brand");
+        try {
+            Assert.assertTrue(productPage.clickBrand("Polo"), "Navigation failed for Polo brand");
+            test.log(Status.PASS, "Polo brand page opened successfully")
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Polo"));
+        } catch (AssertionError e) {
+            test.log(Status.FAIL, "Polo brand navigation failed")
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Polo_Fail"));
+            throw e;
+        }
+    }
+
+    @Test
+    public void verifyHMBrand() throws IOException {
+        test = extent.createTest("TC_ECOM_Products_12 - Verify H&M Brand");
+        try {
+            Assert.assertTrue(productPage.clickBrand("H&M"), "Navigation failed for H&M brand");
+            test.log(Status.PASS, "H&M brand page opened successfully")
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_HM"));
+        } catch (AssertionError e) {
+            test.log(Status.FAIL, "H&M brand navigation failed")
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_HM_Fail"));
+            throw e;
+        }
+    }
+
+    @Test
+    public void verifyMadameBrand() throws IOException {
+        test = extent.createTest("TC_ECOM_Products_13 - Verify Madame Brand");
+        try {
+            Assert.assertTrue(productPage.clickBrand("Madame"), "Navigation failed for Madame brand");
+            test.log(Status.PASS, "Madame brand page opened successfully")
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Madame"));
+        } catch (AssertionError e) {
+            test.log(Status.FAIL, "Madame brand navigation failed")
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Madame_Fail"));
+            throw e;
+        }
+    }
+
+    @Test
+    public void verifyBabyhugBrand() throws IOException {
+        test = extent.createTest("TC_ECOM_Products_14 - Verify Babyhug Brand");
+        try {
+            Assert.assertTrue(productPage.clickBrand("Babyhug"), "Navigation failed for Babyhug brand");
+            test.log(Status.PASS, "Babyhug brand page opened successfully")
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Babyhug"));
+        } catch (AssertionError e) {
+            test.log(Status.FAIL, "Babyhug brand navigation failed")
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Babyhug_Fail"));
+            throw e;
+        }
+    }
+
+    @Test
+    public void verifyAllenSollyBrand() throws IOException {
+        test = extent.createTest("TC_ECOM_Products_15 - Verify Allen Solly Brand");
+        try {
+            Assert.assertTrue(productPage.clickBrand("Allen Solly"), "Navigation failed for Allen Solly brand");
+            test.log(Status.PASS, "Allen Solly brand page opened successfully")
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_AllenSolly"));
+        } catch (AssertionError e) {
+            test.log(Status.FAIL, "Allen Solly brand navigation failed")
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_AllenSolly_Fail"));
+            throw e;
+        }
+    }
+
+    @Test
+    public void verifyKookieKidsBrand() throws IOException {
+        test = extent.createTest("TC_ECOM_Products_16 - Verify Kookie Kids Brand");
+        try {
+            Assert.assertTrue(productPage.clickBrand("Kookie Kids"), "Navigation failed for Kookie Kids brand");
+            test.log(Status.PASS, "Kookie Kids brand page opened successfully")
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_KookieKids"));
+        } catch (AssertionError e) {
+            test.log(Status.FAIL, "Kookie Kids brand navigation failed")
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_KookieKids_Fail"));
+            throw e;
+        }
+    }
+
+    @Test
+    public void verifyBibaBrand() throws IOException {
+        test = extent.createTest("TC_ECOM_Products_17 - Verify Biba Brand");
+        try {
+            Assert.assertTrue(productPage.clickBrand("Biba"), "Navigation failed for Biba brand");
+            test.log(Status.PASS, "Biba brand page opened successfully")
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Biba"));
+        } catch (AssertionError e) {
+            test.log(Status.FAIL, "Biba brand navigation failed")
+                .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Biba_Fail"));
             throw e;
         }
     }
