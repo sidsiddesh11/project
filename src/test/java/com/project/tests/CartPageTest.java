@@ -17,63 +17,78 @@ import java.lang.reflect.Method;
 
 public class CartPageTest extends Basetest {
 
-    private static final String REPORT_DIR = "Reports";
-    private static ExtentReports extent;
-    private static ThreadLocal<ExtentTest> tlTest = new ThreadLocal<>();
+    private static final String REPORT_DIR = "src/test/resources/Reports";  // Updated report folder path
+    private static ExtentReports extent;  // Use the same ExtentReports instance as in Basetest
+    private static ExtentTest test;       // Use the same ExtentTest instance from Basetest
 
-    private static final String EMAIL       = "vivekpatil280803@gmail.com";
-    private static final String PASSWORD    = "abcd@123";
+    private static final String EMAIL = "vivekpatil280803@gmail.com";
+    private static final String PASSWORD = "abcd@123";
     private static final String PRODUCT1_ID = "1";
     private static final String PRODUCT1_NAME = "Blue Top";
-
-    private static final String NAME = "Team A7";
-    private static final String CARD = "4111111111111111";
-    private static final String CVC  = "123";
-    private static final String MM   = "12";
-    private static final String YYYY = "2030";
+    
+    private static final String NAME = "John Doe";          // Name on the card
+    private static final String CARD = "1234567812345678";  // Card number
+    private static final String CVC = "123";                // Card CVC
+    private static final String MM = "12";                  // Card expiry month
+    private static final String YYYY = "25";                // Card expiry year
 
     @BeforeClass(alwaysRun = true)
     public void startExtent() {
+        // Initialize ExtentReports only once and attach the reporter
+        String reportPath = REPORT_DIR + "/CartPageTest.html";  // Updated report path
+
+        // Ensure the report folder exists
         new File(REPORT_DIR).mkdirs();
-        ExtentSparkReporter spark = new ExtentSparkReporter(REPORT_DIR + "/CartPageTest.html");
-        spark.config().setDocumentTitle("Automation Exercise");
-        spark.config().setReportName("Cart Page Flow");
-        extent = new ExtentReports();
-        extent.attachReporter(spark);
-        extent.setSystemInfo("Suite", "CartPage");
-        extent.setSystemInfo("OS", System.getProperty("os.name"));
-        extent.setSystemInfo("Java", System.getProperty("java.version"));
+
+        if (extent == null) {
+            ExtentSparkReporter spark = new ExtentSparkReporter(reportPath);
+            spark.config().setDocumentTitle("Automation Exercise");
+            spark.config().setReportName("Cart Page Flow");
+            extent = new ExtentReports();
+            extent.attachReporter(spark);
+            extent.setSystemInfo("Suite", "CartPage");
+            extent.setSystemInfo("OS", System.getProperty("os.name"));
+            extent.setSystemInfo("Java", System.getProperty("java.version"));
+        }
     }
 
     @BeforeMethod(alwaysRun = true)
     public void createExtentTest(Method m) {
-        ExtentTest test = extent.createTest(m.getName());
-        tlTest.set(test);
+        // Create the ExtentTest instance for each test method
+        test = extent.createTest(m.getName());
     }
 
     @AfterMethod(alwaysRun = true)
     public void updateExtent(ITestResult result) {
-        ExtentTest test = tlTest.get();
         if (test == null) return;
+        
+        // Add the result of each test to the Extent report
         if (result.getStatus() == ITestResult.SUCCESS) {
             test.pass("Test passed");
         } else if (result.getStatus() == ITestResult.SKIP) {
             test.skip("Test skipped: " + (result.getThrowable() == null ? "" : result.getThrowable().toString()));
         } else if (result.getStatus() == ITestResult.FAILURE) {
-            test.fail(result.getThrowable());
-            snap("FAIL_" + result.getMethod().getMethodName());
+            test.fail("Test failed: " + result.getThrowable());
+            snap("FAIL_" + result.getMethod().getMethodName());  // Capture a screenshot if test fails
         }
     }
 
     @AfterClass(alwaysRun = true)
-    public void flushExtent() { if (extent != null) extent.flush(); }
+    public void flushExtent() {
+        if (extent != null) {
+            extent.flush();  // Write the report to disk at the end of the test suite
+        }
+    }
 
-    private ExtentTest log() { return tlTest.get(); }
+    private ExtentTest log() {
+        return test;
+    }
 
     private void snap(String label) {
         try {
             String safe = label.replaceAll("[^a-zA-Z0-9._-]", "_");
-            String path = ScreenshotUtilities.Capture(driver, safe);
+            // Save screenshots in the desired folder (inside 'Reports/Screenshots/')
+            String path = ScreenshotUtilities.Capture(driver, REPORT_DIR + "/Screenshots/" + safe);
             if (log() != null && path != null) log().addScreenCaptureFromPath(path);
         } catch (Exception ignored) {}
     }
@@ -128,13 +143,10 @@ public class CartPageTest extends Basetest {
         return cart;
     }
 
-    // ======================= TESTS =======================
-
     @Test(priority = 1)
     public void t01_login() {
         CartPage cart = startOnLogin();
         login(cart);
-        // More reliable than checking the logo: confirm logged-in state
         Assert.assertTrue(cart.isUserLoggedIn(), "Not logged in (Logout link not visible).");
     }
 
@@ -193,7 +205,6 @@ public class CartPageTest extends Basetest {
         snap("09_order_placed");
 
         Assert.assertTrue(cart.isOrderPlacedVisible(), "Order placed banner not visible.");
-
         cart.paymentClickDownloadInvoice();
         snap("10_invoice_clicked");
 
