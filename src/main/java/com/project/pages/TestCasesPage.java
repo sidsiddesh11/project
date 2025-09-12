@@ -1,5 +1,7 @@
 package com.project.pages;
 
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
 import org.openqa.selenium.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +14,6 @@ public class TestCasesPage {
         this.driver = driver;
     }
 
-    /**
-     * Builds robust, index-based locators for each Test Case row.
-     * This mirrors the approach in API_page but targets the Test Cases list.
-     */
     public void initTestCaseLocators() {
         // Count all “Test Case …” links in the accordion list
         List<WebElement> links = driver.findElements(
@@ -23,33 +21,34 @@ public class TestCasesPage {
 
         testCaseLinkLocators.clear();
         for (int i = 1; i <= links.size(); i++) {
-            // Index-based XPath to avoid stale references after expanding/collapsing
+            // Index-based XPath to avoid stale references
             By indexed = By.xpath("(//div[contains(@class,'panel-group')]//div[contains(@class,'panel')]//h4/a)[" + i + "]");
             testCaseLinkLocators.add(indexed);
         }
     }
 
-    /**
-     * Scrolls each row into view and clicks to expand it.
-     * Uses JS scroll and a normal WebElement click (like your API_page).
-     */
-    public void clickAllTestCases() {
+    public void clickAllTestCases(ExtentTest test) { // ✅ Method now accepts ExtentTest object
+        test.log(Status.INFO, "Found " + testCaseLinkLocators.size() + " test cases to click.");
         for (By locator : testCaseLinkLocators) {
+            String testCaseName = "[Unknown]"; // Default name
             try {
                 WebElement link = driver.findElement(locator);
-
+                testCaseName = link.getText(); // Get link text for better logging
+                // ✅ Log the action before performing it
+                test.log(Status.INFO, "Attempting to click: '" + testCaseName + "'");
                 // Scroll into view
                 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", link);
-
-                // Click (regular click; reliable on this page)
+                // Click the element
                 link.click();
-
-                System.out.println("Clicked: " + locator);
-
-                // Small wait so visual expand is noticeable and DOM settles
+                // ✅ Log the successful result
+                test.log(Status.PASS, "Successfully clicked: '" + testCaseName + "'");
+                // Small wait for the DOM to settle
                 Thread.sleep(500);
             } catch (Exception e) {
-                System.out.println("Could not click: " + locator + " - " + e.getMessage());
+                // ✅ Log the failure
+                test.log(Status.FAIL, "Could not click '" + testCaseName + "'. Locator: " + locator + ". Error: " + e.getMessage());
+                // Break the loop on failure to avoid a cascade of errors
+                break;
             }
         }
     }
