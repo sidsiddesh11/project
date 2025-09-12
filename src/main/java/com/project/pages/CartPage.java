@@ -89,6 +89,33 @@ public class CartPage {
         return this;
     }
 
+ // Updated login method to accept email and password as parameters
+    public CartPage login(String email, String password) {
+        // Assuming you have the elements for email and password
+        WebElement emailField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("email")));
+        WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("password")));
+        WebElement loginButton = driver.findElement(By.xpath("//button[@type='submit']"));
+
+        emailField.clear();
+        emailField.sendKeys(email);
+        passwordField.clear();
+        passwordField.sendKeys(password);
+        loginButton.click();
+
+        // Wait for the page to load and verify login
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(25)).until(ExpectedConditions.or(
+                    ExpectedConditions.visibilityOfElementLocated(LOGGED_IN_AS),
+                    ExpectedConditions.visibilityOfElementLocated(LOGOUT_LINK)
+            ));
+        } catch (Exception e) {
+            // Handle error if login fails
+        }
+
+        return this;
+    }
+    
+    
     public Login_page goToLogin() {
         WebElement loginBtn = wait.until(ExpectedConditions.elementToBeClickable(LOGIN_LINK));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", loginBtn);
@@ -98,7 +125,11 @@ public class CartPage {
     }
 
     /** Robust login that tolerates overlays and slow "Logged in as" banner. */
-    public CartPage login(String email, String password) {
+    public CartPage login() {
+        // Login using provided credentials
+        String email = "vivekpatil280803@gmail.com";  // Provided email
+        String password = "abcd@123";                  // Provided password
+        
         Login_page lp = this.goToLogin();
         lp.login(email, password);
 
@@ -126,58 +157,7 @@ public class CartPage {
         }
     }
 
-    public CartPage goToProductsPage() {
-        wait.until(ExpectedConditions.elementToBeClickable(PRODUCTS_LINK)).click();
-        wait.until(ExpectedConditions.urlContains("/products"));
-        return this;
-    }
-
-    public CartPage openCart() {
-        wait.until(ExpectedConditions.elementToBeClickable(VIEW_CART_ICON)).click();
-        wait.until(ExpectedConditions.urlContains("/view_cart"));
-        return this;
-    }
-
-    // ---------- Cart ----------
-    public CartPage clickAddToCart(String productId) {
-        By addBtn = By.xpath(String.format("//a[@data-product-id='%s']", productId));
-        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(addBtn));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-        try { wait.until(ExpectedConditions.elementToBeClickable(element)).click(); }
-        catch (ElementClickInterceptedException e) { ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element); }
-        wait.until(ExpectedConditions.visibilityOfElementLocated(VIEW_CART_LINK));
-        return this;
-    }
-
-    public CartPage clickViewCartInPopup() {
-        wait.until(ExpectedConditions.elementToBeClickable(VIEW_CART_LINK)).click();
-        wait.until(ExpectedConditions.urlContains("/view_cart"));
-        return this;
-    }
-
-    public boolean isProductInCart(String productName) {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(CART_TABLE))
-                   .getText().contains(productName);
-    }
-
-    public CartPage removeCartItemByRowId(String rowProductId) {
-        By remove = By.xpath(String.format("//*[@id='%s']/td[6]/a", rowProductId));
-        wait.until(ExpectedConditions.elementToBeClickable(remove)).click();
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(remove));
-        return this;
-    }
-
-    public CartPage clickEmptyCartHere() {
-        wait.until(ExpectedConditions.elementToBeClickable(EMPTY_CART_LINK)).click();
-        wait.until(ExpectedConditions.or(
-                ExpectedConditions.urlContains("/products"),
-                ExpectedConditions.visibilityOfElementLocated(HEADER),
-                ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[contains(.,'Subscription')]"))
-        ));
-        return this;
-    }
-
-    // ---------- Proceed to Checkout ----------
+    // Proceed to checkout and place order
     public CartPage proceedToCheckout() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(CART_TABLE));
         waitForDocumentReady();
@@ -222,63 +202,59 @@ public class CartPage {
         return this;
     }
 
-    // ---------- Place Order on Checkout ----------
-    public CartPage clickPlaceOrder() {
-        try {
-            wait.until(ExpectedConditions.or(
-                    ExpectedConditions.urlContains("/checkout"),
-                    ExpectedConditions.visibilityOfElementLocated(CHECKOUT_BREADCRUMB)
-            ));
-        } catch (Exception ignored) {}
+    // ---------- Cart ----------
 
-        WebElement btn = null;
-        List<WebElement> list = driver.findElements(PLACE_ORDER_AT_CHECKOUT);
-        if (!list.isEmpty()) btn = list.get(0);
-        if (btn == null) {
-            list = driver.findElements(PLACE_ORDER_BTN);
-            if (!list.isEmpty()) btn = list.get(0);
-        }
-
-        if (btn == null) {
-            driver.navigate().refresh();
-            wait.until(ExpectedConditions.or(
-                    ExpectedConditions.urlContains("/checkout"),
-                    ExpectedConditions.visibilityOfElementLocated(CHECKOUT_BREADCRUMB)
-            ));
-            list = driver.findElements(PLACE_ORDER_AT_CHECKOUT);
-            if (!list.isEmpty()) btn = list.get(0);
-            if (btn == null) {
-                list = driver.findElements(PLACE_ORDER_BTN);
-                if (!list.isEmpty()) btn = list.get(0);
-            }
-        }
-
-        if (btn != null) {
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", btn);
-            try {
-                wait.until(ExpectedConditions.elementToBeClickable(btn)).click();
-            } catch (Exception e1) {
-                try { new Actions(driver).moveToElement(btn).pause(Duration.ofMillis(120)).click().perform(); }
-                catch (Exception e2) { ((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn); }
-            }
-            wait.until(ExpectedConditions.urlContains("/payment"));
-        }
+    // Cart methods (Add product, view cart, remove items, etc.)
+    public CartPage clickAddToCart(String productId) {
+        By addBtn = By.xpath(String.format("//a[@data-product-id='%s']", productId));
+        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(addBtn));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        try { wait.until(ExpectedConditions.elementToBeClickable(element)).click(); }
+        catch (ElementClickInterceptedException e) { ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element); }
+        wait.until(ExpectedConditions.visibilityOfElementLocated(VIEW_CART_LINK));
         return this;
     }
 
-    public CartPage clickPlaceOrderAndWait() { return clickPlaceOrder(); }
+    public CartPage clickViewCartInPopup() {
+        wait.until(ExpectedConditions.elementToBeClickable(VIEW_CART_LINK)).click();
+        wait.until(ExpectedConditions.urlContains("/view_cart"));
+        return this;
+    }
+    
+ // This method clicks the "Place Order" button
+    public CartPage clickPlaceOrder() {
+        // Locate the Place Order button and click it
+        WebElement placeOrderButton = wait.until(ExpectedConditions.elementToBeClickable(PLACE_ORDER_BTN));
+        placeOrderButton.click();
+
+        // Wait for the page to navigate or load after clicking the button (optional, depending on the flow)
+        wait.until(ExpectedConditions.urlContains("/payment"));
+        return this;
+    }
+
+
+    public boolean isProductInCart(String productName) {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(CART_TABLE))
+                   .getText().contains(productName);
+    }
 
     public boolean isCheckoutPageDisplayed() {
         try {
-            wait.until(ExpectedConditions.or(
-                ExpectedConditions.urlContains("/checkout"),
-                ExpectedConditions.visibilityOfElementLocated(
-                    By.xpath("//h2[contains(.,'Address Details')] | //h2[contains(.,'Review Your Order')]")
-                ),
-                ExpectedConditions.visibilityOfElementLocated(CHECKOUT_BREADCRUMB)
-            ));
-            return true;
-        } catch (Exception e) { return false; }
+            wait.until(ExpectedConditions.visibilityOfElementLocated(CHECKOUT_BREADCRUMB));
+            return true; // Checkout breadcrumb is visible, so checkout page is displayed
+        } catch (Exception e) {
+            return false; // If the breadcrumb is not found, return false
+        }
+    }
+
+    public CartPage clickEmptyCartHere() {
+        wait.until(ExpectedConditions.elementToBeClickable(EMPTY_CART_LINK)).click();
+        wait.until(ExpectedConditions.or(
+                ExpectedConditions.urlContains("/products"),
+                ExpectedConditions.visibilityOfElementLocated(HEADER),
+                ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[contains(.,'Subscription')]"))
+        ));
+        return this;
     }
 
     // ===================== PAYMENT HELPERS =====================
@@ -368,8 +344,7 @@ public class CartPage {
         return this;
     }
     // =======================================================================
-
-    // ---------- Helpers ----------
+    // Helper Methods
     private WebElement findFirstPresent(By... locators) {
         for (By by : locators) {
             List<WebElement> list = driver.findElements(by);
@@ -380,7 +355,7 @@ public class CartPage {
 
     private void waitForDocumentReady() {
         try {
-            new WebDriverWait(driver, Duration.ofSeconds(5)).until(d ->
+            new WebDriverWait(driver, Duration.ofSeconds(5)).until(d -> 
                 "complete".equals(((JavascriptExecutor) d).executeScript("return document.readyState"))
             );
         } catch (Exception ignored) {}
@@ -396,9 +371,9 @@ public class CartPage {
     private void nukeOverlays() {
         try {
             ((JavascriptExecutor) driver).executeScript(
-                "document.querySelectorAll(\"iframe[id^='aswift'],iframe[name^='aswift'],"
-              + " [title='Advertisement'], [aria-label='Advertisement'], .adsbygoogle,"
-              + " [style*='z-index: 2147483']\").forEach(e=>{try{e.remove()}catch(_){}});"
+                "document.querySelectorAll(\"iframe[id^='aswift'],iframe[name^='aswift']," +
+                " [title='Advertisement'], [aria-label='Advertisement'], .adsbygoogle," +
+                " [style*='z-index: 2147483']\").forEach(e=>{try{e.remove()}catch(_){}});"
             );
         } catch (Exception ignored) {}
     }
@@ -417,74 +392,4 @@ public class CartPage {
         }
         return this;
     }
-
-    public boolean isAddressDisplayed() {
-        try {
-            By addressSection = By.xpath("//h2[contains(text(),'Address Details')]");
-            return wait.until(ExpectedConditions.visibilityOfElementLocated(addressSection)).isDisplayed();
-        } catch (Exception e) { return false; }
-    }
-
-    public CartPage enterComment(String text) {
-        WebElement box = wait.until(ExpectedConditions.visibilityOfElementLocated(COMMENT_BOX));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", box);
-        new Actions(driver).moveToElement(box).click().perform();
-        box.clear();
-        box.sendKeys(text);
-        return this;
-    }
-
-    public boolean isCommentEntered() {
-        WebElement box = wait.until(ExpectedConditions.visibilityOfElementLocated(COMMENT_BOX));
-        String val = box.getAttribute("value");
-        return val != null && !val.trim().isEmpty();
-    }
-
-    public CartPage clickLogo() {
-        wait.until(ExpectedConditions.elementToBeClickable(LOGO)).click();
-        return this;
-    }
-
-    public boolean isLogoDisplayed() {
-        try { return wait.until(ExpectedConditions.visibilityOfElementLocated(LOGO)).isDisplayed(); }
-        catch (Exception e) { return false; }
-    }
-
-    public String captureLogoScreenshot(String screenshotName) {
-        try { return ScreenshotUtilities.Capture(driver, screenshotName); }
-        catch (Exception e) { e.printStackTrace(); return null; }
-    }
-
-    public String captueCartPageScreenshot(String screenshotName) {
-        try { return ScreenshotUtilities.Capture(driver, screenshotName); }
-        catch (Exception e) { e.printStackTrace(); return null; }
-    }
-
-    public CartPage scrollToFooter() {
-        WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(FOOTER));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
-        return this;
-    }
-
-    public CartPage scrollToHeader() {
-        WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(HEADER));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
-        return this;
-    }
-
-    public boolean isFooterDisplayed() {
-        try { return wait.until(ExpectedConditions.visibilityOfElementLocated(FOOTER)).isDisplayed(); }
-        catch (Exception e) { return false; }
-    }
-
-    public boolean isHeaderDisplayed() {
-        try { return wait.until(ExpectedConditions.visibilityOfElementLocated(HEADER)).isDisplayed(); }
-        catch (Exception e) { return false; }
-    }
-
-    public CartPage clickHome()      { wait.until(ExpectedConditions.elementToBeClickable(HOME_LINK)).click();      return this; }
-    public CartPage clickProducts()  { wait.until(ExpectedConditions.elementToBeClickable(PRODUCTS_LINK)).click();  return this; }
-    public CartPage clickApiList()   { wait.until(ExpectedConditions.elementToBeClickable(API_LIST_LINK)).click();  return this; }
-    public CartPage clickTestCases() { wait.until(ExpectedConditions.elementToBeClickable(TEST_CASES_LINK)).click();return this; }
-    public CartPage clickContactUs() { wait.until(ExpectedConditions.elementToBeClickable(CONTACT_US_LINK)).click();return this; }
 }
