@@ -20,9 +20,15 @@ public class productpage {
     private By cartSuccessModal = By.id("cartModal");
     private By continueShoppingBtn = By.cssSelector(".btn-success.close-modal.btn-block");
     private By viewCartBtn = By.xpath("//u[text()='View Cart']");
-    private By womenCategory = By.xpath("//div[@class='panel-heading']//a[contains(text(),'Women')]");
-    private By menCategory   = By.xpath("//*[@id=\"accordian\"]/div[2]/div[1]/h4/a");
-    private By kidsCategory  = By.xpath("//*[@id=\"accordian\"]/div[3]/div[1]/h4/a");
+    private By womenCategory = By.xpath("//a[@href='#Women']");
+    private By menCategory   = By.xpath("//a[@href='#Men']");
+    private By kidsCategory  = By.xpath("//a[@href='#Kids']");
+
+    // Subcategories to validate navigation
+    private By womenDressSub = By.xpath("//div[@id='Women']//a[contains(text(),'Dress')]");
+    private By menTshirtsSub = By.xpath("//div[@id='Men']//a[contains(text(),'Tshirts')]");
+    private By kidsDressSub  = By.xpath("//div[@id='Kids']//a[contains(text(),'Dress')]");
+
 
     public productpage(WebDriver driver) {
         this.driver = driver;
@@ -101,6 +107,8 @@ public class productpage {
         WebElement women = driver.findElement(womenCategory);
         scrollToElement(women);
         women.click();
+        WebElement sub = wait.until(ExpectedConditions.elementToBeClickable(womenDressSub));
+        sub.click();
         return driver.getCurrentUrl().contains("category_products");
     }
 
@@ -108,6 +116,8 @@ public class productpage {
         WebElement men = driver.findElement(menCategory);
         scrollToElement(men);
         men.click();
+        WebElement sub = wait.until(ExpectedConditions.elementToBeClickable(menTshirtsSub));
+        sub.click();
         return driver.getCurrentUrl().contains("category_products");
     }
 
@@ -115,6 +125,9 @@ public class productpage {
         WebElement kids = driver.findElement(kidsCategory);
         scrollToElement(kids);
         kids.click();
+        WebElement sub = wait.until(ExpectedConditions.elementToBeClickable(kidsDressSub));
+        sub.click();
         return driver.getCurrentUrl().contains("category_products");
     }
+
 }
