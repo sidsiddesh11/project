@@ -55,7 +55,12 @@
     <version>1.18.34</version>
     <scope>provided</scope>
 </dependency>
-<build>
+
+
+
+
+ </dependencies>
+  <build>
     <plugins>
         <!-- Compiler plugin with Java 21 + Lombok fix -->
         <plugin>
@@ -76,8 +81,4 @@
         </plugin>
     </plugins>
 </build>
-
-
-
- </dependencies>
 </project>
