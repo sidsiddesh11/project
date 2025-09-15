@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 
 public class ContactUsPageTest extends Basetest {
 
-    private static final String EXCEL = "src/test/resources/contactus.xlsx";
+    private static final String EXCEL = System.getProperty("user.dir")+"/src/test/resources/contactus.xlsx";
 
     @BeforeMethod(alwaysRun = true)
     public void createExtentNode(Method m) {
