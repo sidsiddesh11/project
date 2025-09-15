@@ -1,6 +1,5 @@
 package com.project.pages;
 
-
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -12,7 +11,6 @@ public class Signup_Page {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // Constructor
     public Signup_Page(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
@@ -62,16 +60,21 @@ public class Signup_Page {
         } else {
             wait.until(ExpectedConditions.elementToBeClickable(mrsRadio)).click();
         }
+
         driver.findElement(passwordField).sendKeys(pwd);
 
         new Select(driver.findElement(daysDropdown)).selectByVisibleText(day);
         new Select(driver.findElement(monthsDropdown)).selectByVisibleText(month);
         new Select(driver.findElement(yearsDropdown)).selectByVisibleText(year);
+
+        // Wait until first address field appears (ensures page loaded fully)
+        wait.until(ExpectedConditions.visibilityOfElementLocated(firstName));
     }
 
     public void fillAddress(String fname, String lname, String comp, String addr1, String addr2,
                             String country, String st, String cty, String zip, String mobile) {
-        driver.findElement(firstName).sendKeys(fname);
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(firstName)).sendKeys(fname);
         driver.findElement(lastName).sendKeys(lname);
         driver.findElement(company).sendKeys(comp);
         driver.findElement(address1).sendKeys(addr1);
@@ -86,7 +89,7 @@ public class Signup_Page {
     }
 
     public void clickCreateAccount() {
-        driver.findElement(createAccountBtn).click();
+        wait.until(ExpectedConditions.elementToBeClickable(createAccountBtn)).click();
     }
 
     public boolean isAccountCreated() {
