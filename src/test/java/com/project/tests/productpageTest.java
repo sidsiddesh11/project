@@ -9,6 +9,9 @@ import org.testng.annotations.Test;
 import com.project.base.Basetest;
 import com.project.pages.productpage;
 import com.project.utilities.ScreenshotUtilities;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 import com.aventstack.extentreports.Status;
 
 public class productpageTest extends Basetest {
@@ -16,65 +19,73 @@ public class productpageTest extends Basetest {
 
     @BeforeMethod
     public void setUpPage() {
-        driver.get("https://automationexercise.com/products");   // ✅ Directly open Products page
+    	WebDriverManager.chromedriver().setup();
+
+        driver.get("https://automationexercise.com/products");   
         productPage = new productpage(driver);
     }
-
-    // ----------------- Existing Test Cases -----------------
 
     @Test
     public void verifyProductsDisplayed() throws IOException {
         test = extent.createTest("TC_ECOM_Products_01 - Verify Products Displayed");
-        try {
-            Assert.assertTrue(productPage.areProductsDisplayed(), "Products are not displayed");
+        boolean result = productPage.areProductsDisplayed();
+        if (result) {
+            test.log(Status.INFO, "Checking if products are displayed");
+            Assert.assertTrue(result, "Products are not displayed");
             test.log(Status.PASS, "Products displayed successfully")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "ProductsDisplayed"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "Products not displayed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "ProductsNotDisplayed"));
-            throw e;
+            Assert.fail("Products are not displayed");
         }
     }
 
     @Test
     public void verifyValidProductSearch() throws IOException {
         test = extent.createTest("TC_ECOM_Products_02 - Verify Valid Product Search");
-        try {
-            Assert.assertTrue(productPage.searchProduct("Dress"), "Valid product not found in search");
+        boolean result = productPage.searchProduct("Dress");
+        if (result) {
+            test.log(Status.INFO, "Searching for valid product: Dress");
+            Assert.assertTrue(result, "Valid product not found in search");
             test.log(Status.PASS, "Valid product search successful")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "ValidSearch"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "Valid product search failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "ValidSearchFail"));
-            throw e;
+            Assert.fail("Valid product not found in search");
         }
     }
 
     @Test
     public void verifyInvalidProductSearch() throws IOException {
         test = extent.createTest("TC_ECOM_Products_03 - Verify Invalid Product Search");
-        try {
-            Assert.assertFalse(productPage.searchProduct("xyz123"), "Invalid product should not be found");
+        boolean result = productPage.searchProduct("xyz123");
+        if (!result) {
+            test.log(Status.INFO, "Searching for invalid product: xyz123");
+            Assert.assertFalse(result, "Invalid product should not be found");
             test.log(Status.PASS, "Invalid product search verified successfully")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "InvalidSearch"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "Invalid product search failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "InvalidSearchFail"));
-            throw e;
+            Assert.fail("Invalid product should not be found but it was displayed");
         }
     }
 
     @Test
     public void verifyAddToCart() throws IOException {
         test = extent.createTest("TC_ECOM_Products_04 - Verify Add to Cart");
-        try {
-            Assert.assertTrue(productPage.addFirstProductToCart(), "Add to cart modal not displayed");
+        boolean result = productPage.addFirstProductToCart();
+        if (result) {
+            test.log(Status.INFO, "Adding first product to cart");
+            Assert.assertTrue(result, "Add to cart modal not displayed");
             test.log(Status.PASS, "Product added to cart successfully")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "AddToCart"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "Add to cart failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "AddToCartFail"));
-            throw e;
+            Assert.fail("Add to cart modal not displayed");
         }
     }
 
@@ -82,14 +93,16 @@ public class productpageTest extends Basetest {
     public void verifyContinueShoppingButton() throws IOException {
         test = extent.createTest("TC_ECOM_Products_05 - Verify Continue Shopping Button");
         productPage.addFirstProductToCart();
-        try {
-            Assert.assertTrue(productPage.clickContinueShopping(), "Continue shopping failed");
+        boolean result = productPage.clickContinueShopping();
+        if (result) {
+            test.log(Status.INFO, "Clicking Continue Shopping button");
+            Assert.assertTrue(result, "Continue shopping failed");
             test.log(Status.PASS, "Continue shopping successful")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "ContinueShopping"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "Continue shopping button failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "ContinueShoppingFail"));
-            throw e;
+            Assert.fail("Continue shopping button not working");
         }
     }
 
@@ -97,170 +110,193 @@ public class productpageTest extends Basetest {
     public void verifyViewCartButton() throws IOException {
         test = extent.createTest("TC_ECOM_Products_06 - Verify View Cart Button");
         productPage.addFirstProductToCart();
-        try {
-            Assert.assertTrue(productPage.clickViewCart(), "View cart button failed");
+        boolean result = productPage.clickViewCart();
+        if (result) {
+            test.log(Status.INFO, "Clicking View Cart button");
+            Assert.assertTrue(result, "View cart button failed");
             test.log(Status.PASS, "View Cart button clicked successfully")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "ViewCart"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "View Cart button failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "ViewCartFail"));
-            throw e;
+            Assert.fail("View Cart button not working");
         }
     }
 
     @Test
     public void verifyViewFirstProduct() throws IOException {
         test = extent.createTest("TC_ECOM_Products_07 - Verify View First Product");
-        try {
-            Assert.assertTrue(productPage.viewFirstProduct(), "View product navigation failed");
+        boolean result = productPage.viewFirstProduct();
+        if (result) {
+            test.log(Status.INFO, "Clicking first product to view details");
+            Assert.assertTrue(result, "View product navigation failed");
             test.log(Status.PASS, "First product viewed successfully")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "ViewProduct"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "View first product failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "ViewProductFail"));
-            throw e;
+            Assert.fail("View first product failed");
         }
     }
 
     @Test
     public void verifyWomenCategory() throws IOException {
         test = extent.createTest("TC_ECOM_Products_08 - Verify Women Category");
-        try {
-            Assert.assertTrue(productPage.clickWomenCategory(), "Women category failed");
+        boolean result = productPage.clickWomenCategory();
+        if (result) {
+            test.log(Status.INFO, "Clicking Women category");
+            Assert.assertTrue(result, "Women category failed");
             test.log(Status.PASS, "Women category clicked successfully")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "WomenCategory"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "Women category failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "WomenCategoryFail"));
-            throw e;
+            Assert.fail("Women category failed");
         }
     }
 
     @Test
     public void verifyMenCategory() throws IOException {
         test = extent.createTest("TC_ECOM_Products_09 - Verify Men Category");
-        try {
-            Assert.assertTrue(productPage.clickMenCategory(), "Men category failed");
+        boolean result = productPage.clickMenCategory();
+        if (result) {
+            test.log(Status.INFO, "Clicking Men category");
+            Assert.assertTrue(result, "Men category failed");
             test.log(Status.PASS, "Men category clicked successfully")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "MenCategory"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "Men category failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "MenCategoryFail"));
-            throw e;
+            Assert.fail("Men category failed");
         }
     }
 
     @Test
     public void verifyKidsCategory() throws IOException {
         test = extent.createTest("TC_ECOM_Products_10 - Verify Kids Category");
-        try {
-            Assert.assertTrue(productPage.clickKidsCategory(), "Kids category failed");
+        boolean result = productPage.clickKidsCategory();
+        if (result) {
+            test.log(Status.INFO, "Clicking Kids category");
+            Assert.assertTrue(result, "Kids category failed");
             test.log(Status.PASS, "Kids category clicked successfully")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "KidsCategory"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "Kids category failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "KidsCategoryFail"));
-            throw e;
+            Assert.fail("Kids category failed");
         }
     }
 
-    // ----------------- New Brand Test Cases -----------------
-
+    // ✅ Brand Tests
     @Test
     public void verifyPoloBrand() throws IOException {
         test = extent.createTest("TC_ECOM_Products_11 - Verify Polo Brand");
-        try {
-            Assert.assertTrue(productPage.clickBrand("Polo"), "Navigation failed for Polo brand");
+        boolean result = productPage.clickBrand("Polo");
+        if (result) {
+            test.log(Status.INFO, "Clicking Polo brand");
+            Assert.assertTrue(result, "Navigation failed for Polo brand");
             test.log(Status.PASS, "Polo brand page opened successfully")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Polo"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "Polo brand navigation failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Polo_Fail"));
-            throw e;
+            Assert.fail("Polo brand navigation failed");
         }
     }
 
     @Test
     public void verifyHMBrand() throws IOException {
         test = extent.createTest("TC_ECOM_Products_12 - Verify H&M Brand");
-        try {
-            Assert.assertTrue(productPage.clickBrand("H&M"), "Navigation failed for H&M brand");
+        boolean result = productPage.clickBrand("H&M");
+        if (result) {
+            test.log(Status.INFO, "Clicking H&M brand");
+            Assert.assertTrue(result, "Navigation failed for H&M brand");
             test.log(Status.PASS, "H&M brand page opened successfully")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_HM"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "H&M brand navigation failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_HM_Fail"));
-            throw e;
+            Assert.fail("H&M brand navigation failed");
         }
     }
 
     @Test
     public void verifyMadameBrand() throws IOException {
         test = extent.createTest("TC_ECOM_Products_13 - Verify Madame Brand");
-        try {
-            Assert.assertTrue(productPage.clickBrand("Madame"), "Navigation failed for Madame brand");
+        boolean result = productPage.clickBrand("Madame");
+        if (result) {
+            test.log(Status.INFO, "Clicking Madame brand");
+            Assert.assertTrue(result, "Navigation failed for Madame brand");
             test.log(Status.PASS, "Madame brand page opened successfully")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Madame"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "Madame brand navigation failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Madame_Fail"));
-            throw e;
+            Assert.fail("Madame brand navigation failed");
         }
     }
 
     @Test
     public void verifyBabyhugBrand() throws IOException {
         test = extent.createTest("TC_ECOM_Products_14 - Verify Babyhug Brand");
-        try {
-            Assert.assertTrue(productPage.clickBrand("Babyhug"), "Navigation failed for Babyhug brand");
+        boolean result = productPage.clickBrand("Babyhug");
+        if (result) {
+            test.log(Status.INFO, "Clicking Babyhug brand");
+            Assert.assertTrue(result, "Navigation failed for Babyhug brand");
             test.log(Status.PASS, "Babyhug brand page opened successfully")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Babyhug"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "Babyhug brand navigation failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Babyhug_Fail"));
-            throw e;
+            Assert.fail("Babyhug brand navigation failed");
         }
     }
 
     @Test
     public void verifyAllenSollyBrand() throws IOException {
         test = extent.createTest("TC_ECOM_Products_15 - Verify Allen Solly Brand");
-        try {
-            Assert.assertTrue(productPage.clickBrand("Allen Solly"), "Navigation failed for Allen Solly brand");
+        boolean result = productPage.clickBrand("Allen Solly");
+        if (result) {
+            test.log(Status.INFO, "Clicking Allen Solly brand");
+            Assert.assertTrue(result, "Navigation failed for Allen Solly brand");
             test.log(Status.PASS, "Allen Solly brand page opened successfully")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_AllenSolly"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "Allen Solly brand navigation failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_AllenSolly_Fail"));
-            throw e;
+            Assert.fail("Allen Solly brand navigation failed");
         }
     }
 
     @Test
     public void verifyKookieKidsBrand() throws IOException {
         test = extent.createTest("TC_ECOM_Products_16 - Verify Kookie Kids Brand");
-        try {
-            Assert.assertTrue(productPage.clickBrand("Kookie Kids"), "Navigation failed for Kookie Kids brand");
+        boolean result = productPage.clickBrand("Kookie Kids");
+        if (result) {
+            test.log(Status.INFO, "Clicking Kookie Kids brand");
+            Assert.assertTrue(result, "Navigation failed for Kookie Kids brand");
             test.log(Status.PASS, "Kookie Kids brand page opened successfully")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_KookieKids"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "Kookie Kids brand navigation failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_KookieKids_Fail"));
-            throw e;
+            Assert.fail("Kookie Kids brand navigation failed");
         }
     }
 
     @Test
     public void verifyBibaBrand() throws IOException {
         test = extent.createTest("TC_ECOM_Products_17 - Verify Biba Brand");
-        try {
-            Assert.assertTrue(productPage.clickBrand("Biba"), "Navigation failed for Biba brand");
+        boolean result = productPage.clickBrand("Biba");
+        if (result) {
+            test.log(Status.INFO, "Clicking Biba brand");
+            Assert.assertTrue(result, "Navigation failed for Biba brand");
             test.log(Status.PASS, "Biba brand page opened successfully")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Biba"));
-        } catch (AssertionError e) {
+        } else {
             test.log(Status.FAIL, "Biba brand navigation failed")
                 .addScreenCaptureFromPath(ScreenshotUtilities.Capture(driver, "Brand_Biba_Fail"));
-            throw e;
+            Assert.fail("Biba brand navigation failed");
         }
     }
 }
