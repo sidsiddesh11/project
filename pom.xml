@@ -18,13 +18,7 @@
     <artifactId>webdrivermanager</artifactId>
     <version>6.2.0</version>
 </dependency>
-<!-- https://mvnrepository.com/artifact/org.testng/testng -->
-<dependency>
-    <groupId>org.testng</groupId>
-    <artifactId>testng</artifactId>
-    <version>7.4.0</version>
-    <scope>test</scope>
-</dependency>
+
 <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
 <dependency>
 <groupId>org.apache.poi</groupId>
