@@ -71,16 +71,7 @@ public class UI_Test_Case extends Basetest {
                 "Logo should be visible");
         pass("Logo is visible");
     }
-    /* @Test(priority = 4)
-    public void Products_VerifyHeadingsAndSections() {
-        info("Verify Products headings & sections");
-        driver.get("https://automationexercise.com/products");
-        Assert.assertTrue(driver.findElement(By.xpath("//h2[normalize-space()='All Products']")).isDisplayed(), "'ALL PRODUCTS' heading");
-        Assert.assertTrue(driver.findElement(By.id("search_product")).isDisplayed(), "Search Product box");
-        Assert.assertTrue(driver.findElement(By.xpath("//*[@id='accordian']")).isDisplayed(), "Categories accordion");
-        Assert.assertTrue(driver.findElement(By.xpath("//div[contains(@class,'brands_products')]")).isDisplayed(), "Brands area");
-        pass("Products sections visible");
-    } */
+  
 
     @Test(priority = 5)
     public void Products_VerifyCardsPresent() {
@@ -91,18 +82,8 @@ public class UI_Test_Case extends Basetest {
         pass("Product cards present: " + cards.size());
     }
     
-    /*n@Test(priority = 6)
-    public void VerifyViewProductAndImage() {
-        // Click "View Product"
-        driver.findElement(By.xpath("/html/body/section/div/div/div[2]/div[2]/div[1]/div/img")).click();
-
-        // Verify product image
-        Assert.assertTrue(driver.findElement(By.cssSelector(".view-product")).isDisplayed(),
-                "Product image should be visible");
-        
-    } */
     
-    @Test(priority = 7)
+    @Test(priority = 6)
     public void VerifyViewProductName() {
         // Click "View Product"
         driver.findElement(By.cssSelector("a[href='/product_details/1']")).click();
@@ -111,7 +92,7 @@ public class UI_Test_Case extends Basetest {
         Assert.assertTrue(driver.findElement(By.xpath("//*[normalize-space()='Blue Top']")).isDisplayed(),
                 "Product name should be visible");
     }
-    @Test(priority = 8)
+    @Test(priority = 7)
     public void VerifyViewProductPrice() {
         // Click "View Product"
     	driver.findElement(By.cssSelector("a[href='/product_details/1']")).click();
@@ -120,7 +101,7 @@ public class UI_Test_Case extends Basetest {
         Assert.assertTrue(driver.findElement(By.xpath("//*[contains(normalize-space(),'Rs. 500')]")).isDisplayed(),
                 "Product price should be visible");
     }
-    @Test(priority = 9)
+    @Test(priority = 8)
     public void VerifyViewProductQuantity() {
         // Click "View Product"
     	driver.findElement(By.cssSelector("a[href='/product_details/1']")).click();
@@ -129,7 +110,7 @@ public class UI_Test_Case extends Basetest {
         Assert.assertTrue(driver.findElement(By.id("quantity")).isDisplayed(),
                 "Quantity input should be visible");
     }
-    @Test(priority = 10)
+    @Test(priority = 9)
     public void VerifyViewProductAddtoCart() {
         // Click "View Product"
     	driver.findElement(By.cssSelector("a[href='/product_details/1']")).click();
@@ -139,7 +120,7 @@ public class UI_Test_Case extends Basetest {
                 "Add to cart button should be visible");
     }
 
-    @Test(priority = 11)
+    @Test(priority = 10)
     public void VerifyShortDescriptionVisible() {
     	driver.findElement(By.cssSelector("a[href='/product_details/1']")).click();
 
@@ -151,7 +132,7 @@ public class UI_Test_Case extends Basetest {
         Assert.assertTrue(driver.findElement(By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/p[4]")).isDisplayed(),
                 "Brand should be visible"); 
     }
-    @Test(priority = 12)
+    @Test(priority = 11)
     public void VerifyReviewSectionDetails() {
     	driver.findElement(By.cssSelector("a[href='/product_details/1']")).click();
 
@@ -162,7 +143,7 @@ public class UI_Test_Case extends Basetest {
     
     // 3) CART 
     
-    @Test(priority = 13)
+    @Test(priority = 12)
     public void Cart_VerifyUrl() {
         info("Opening Cart page");
         driver.get("https://automationexercise.com/view_cart");
@@ -171,7 +152,7 @@ public class UI_Test_Case extends Basetest {
         pass("Cart URL verified → " + actualUrl);
     }
     
-    @Test(priority = 14)
+    @Test(priority = 13)
     public void Cart_VerifyUI() {
         info("Opening Cart page");
         driver.get("https://automationexercise.com/view_cart");
@@ -183,7 +164,7 @@ public class UI_Test_Case extends Basetest {
 
     // 4) SIGNUP / LOGIN 
     
-    @Test(priority = 15)
+    @Test(priority = 14)
     public void SignupLogin_VerifyUrl() {
         info("Opening SignUp/Login page");
         driver.get("https://automationexercise.com/login");
@@ -192,7 +173,7 @@ public class UI_Test_Case extends Basetest {
         pass("Sign Up / Login URL verified → " + actualUrl);
     }
     
-    @Test(priority = 16)
+    @Test(priority = 15)
     public void SignupLogin_VerifyUI() {
         info("Opening Signup/Login page");
         driver.get("https://automationexercise.com/login");
@@ -209,7 +190,7 @@ public class UI_Test_Case extends Basetest {
 
     // 5) TEST CASES 
     
-    @Test(priority = 17)
+    @Test(priority = 16)
     public void TestCase_VerifyUrl() {
         info("Opening Test Cases page");
         driver.get("https://automationexercise.com/test_cases");
@@ -218,7 +199,7 @@ public class UI_Test_Case extends Basetest {
         pass("Test Case URL verified → " + actualUrl);
     }
     
-    @Test(priority = 18)
+    @Test(priority = 17)
     public void TestCases_VerifyUI() {
         info("Opening Test Cases page");
         driver.get("https://automationexercise.com/test_cases");
@@ -228,7 +209,7 @@ public class UI_Test_Case extends Basetest {
 
     // 6) API TESTING 
     
-    @Test(priority = 19)
+    @Test(priority = 18)
     public void APITesting_VerifyUrl() {
         info("Opening API Testing page");
         driver.get("https://automationexercise.com/api_list");
@@ -237,7 +218,7 @@ public class UI_Test_Case extends Basetest {
         pass("API Testing URL verified → " + actualUrl);
     }
     
-    @Test(priority = 20)
+    @Test(priority = 19)
     public void APITesting_VerifyUI() {
         info("Opening API Testing page");
         driver.get("https://automationexercise.com/api_list");
@@ -247,7 +228,7 @@ public class UI_Test_Case extends Basetest {
     }
 
     //  7) VIDEO TUTORIAL 
-    @Test(priority = 21)
+    @Test(priority = 20)
 
     public void VideoTutorial_VerifyUrl() {
         info("Opening Contact Us page");
@@ -258,7 +239,7 @@ public class UI_Test_Case extends Basetest {
     }
 
     //  8) CONTACT US 
-    @Test(priority = 22)
+    @Test(priority = 21)
     public void ContactUs_VerifyUrl() {
         info("Opening Contact Us page");
         driver.get("https://automationexercise.com/contact_us");
