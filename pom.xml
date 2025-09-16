@@ -49,9 +49,10 @@
 <dependency>
     <groupId>org.testng</groupId>
     <artifactId>testng</artifactId>
-    <version>7.10.2</version> <!-- Latest stable -->
-    <scope>compile</scope>    <!-- 👈 change from <test> to <compile> -->
+    <version>7.10.2</version>
+    <scope>compile</scope>
 </dependency>
+
 
 
 
