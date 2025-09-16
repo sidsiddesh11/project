@@ -10,6 +10,7 @@
       <class name="com.project.tests.VideoTutorialsPageTest"/>
       <class name="com.project.tests.Login_Tests"/>
       <class name="com.project.tests.Signup_Test"/>
+      <class name="com.project.tests.UI_Test_Case"/>
       <class name="com.project.tests.HomePageTest"/>
       <class name="com.project.tests.TestCasesPageTest"/>
       <class name="com.project.tests.ContactUsPage_UI_Test"/>
